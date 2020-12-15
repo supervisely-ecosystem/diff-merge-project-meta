@@ -16,7 +16,7 @@ PROJECT2 = None
 META2 = None
 
 
-def process_items(collection1, collection2, diff_msg="Shapes differ"):
+def process_items(collection1, collection2, diff_msg="Shape conflict"):
     items1 = {item.name: 1 for item in collection1}
     items2 = {item.name: 1 for item in collection2}
     names = items1.keys() | items2.keys()
@@ -54,8 +54,15 @@ def process_items(collection1, collection2, diff_msg="Shapes differ"):
             flag = True
             if type(meta1) is sly.ObjClass and meta1.geometry_type != meta2.geometry_type:
                 flag = False
-            if type(meta1) is sly.TagMeta and meta1.value_type != meta2.value_type:
-                flag = False
+            if type(meta1) is sly.TagMeta:
+                meta1: sly.TagMeta
+                meta2: sly.TagMeta
+                if meta1.value_type != meta2.value_type:
+                    flag = False
+                if meta1.value_type == sly.TagValueType.ONEOF_STRING:
+                    if set(meta1.possible_values) != set(meta2.possible_values):
+                        diff_msg = "Type OneOf: possible values differ"
+                    flag = False
 
             if flag is False:
                 compare["infoMessage"] = diff_msg
@@ -67,11 +74,11 @@ def process_items(collection1, collection2, diff_msg="Shapes differ"):
                 match.append(compare)
         else:
             if name in diff1:
-                compare["infoMessage"] = "Missing in Project #2"
+                compare["infoMessage"] = "Not found in Project #2"
                 compare["infoIcon"] = ["zmdi zmdi-alert-circle-o", "zmdi zmdi-long-arrow-right"]
                 compare["iconPosition"] = "right"
             else:
-                compare["infoMessage"] = "Missing in Project #1"
+                compare["infoMessage"] = "Not found in Project #1"
                 compare["infoIcon"] = ["zmdi zmdi-long-arrow-left", "zmdi zmdi-alert-circle-o"]
             compare["infoColor"] = "#FFBF00"
             missed.append(compare)
@@ -96,7 +103,7 @@ def init_ui(api: sly.Api, task_id, app_logger):
     META2 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID2))
 
     classes_table = process_items(META1.obj_classes, META2.obj_classes)
-    tags_table = process_items(META1.tag_metas, META2.tag_metas, diff_msg="Tag type differ")
+    tags_table = process_items(META1.tag_metas, META2.tag_metas, diff_msg="Type conflict")
 
     data = {
         "projectId1": PROJECT1.id,
@@ -118,12 +125,26 @@ def init_ui(api: sly.Api, task_id, app_logger):
                 "description": "Tags colors are ignored",
                 "columnSuffix": "tags"
             }
-        ]
+        ],
+        "mergeClassesOptions": ["unify", "intersect"],
+        "mergeTagsOptions": ["unify", "intersect"],
+        "resolveClassesOptions": ["skip class", "use left", "use right"],
+        "resolveTagsOptions": ["skip tag", "use left", "use right"],
     }
     state = {
+        "mergeClasses": "unify",
+        "mergeTags": "unify",
+        "resolveClasses": "skip class",
+        "resolveTags": "skip tag",
+        "resultProjectName": "new project"
     }
-
     return data, state
+
+
+@my_app.callback("merge")
+@sly.timeit
+def merge(api: sly.Api, task_id, context, state, app_logger):
+    pass
 
 
 def main():
@@ -133,8 +154,9 @@ def main():
     })
 
     data, state = init_ui(my_app.public_api, my_app.task_id, my_app.logger)
-    my_app.run(data=data, state=state, initial_events=[{"command": "compare"}])
+    my_app.run(data=data, state=state)
 
 
+#@TODO: add original project ids to metadata and description
 if __name__ == "__main__":
     sly.main_wrapper("main", main)
