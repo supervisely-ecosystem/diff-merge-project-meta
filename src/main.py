@@ -28,6 +28,9 @@ def init_ui(api: sly.Api, task_id, app_logger):
     PROJECT1 = api.project.get_info_by_id(PROJECT_ID1)
     PROJECT2 = api.project.get_info_by_id(PROJECT_ID2)
 
+    if PROJECT1.type != PROJECT2.type:
+        raise TypeError(f"Projects have different types: {str(PROJECT1.type)} != {str(PROJECT2.type)}")
+
     META1 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID1))
     META2 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID2))
 
@@ -38,20 +41,32 @@ def init_ui(api: sly.Api, task_id, app_logger):
     diff_classes1 = classes1.keys() - mutual_classes
     diff_classes2 = classes2.keys() - mutual_classes
 
-    classes_table = []
+    match_classes = []
+    differ_classes = []
+
     for class_name in mutual_classes:
-        info = "Match"
-        if classes1[class_name] != classes2[class_name]:
-            info = "Shapes differ"
-        classes_table.append({
+        compare = {
             "class1": class_name,
             "color1": sly.color.rgb2hex(META1.obj_classes.get(class_name).color),
             "shape1": classes1[class_name].geometry_name(),
             "class2": class_name,
             "shape2": classes2[class_name].geometry_name(),
             "color2": sly.color.rgb2hex(META2.obj_classes.get(class_name).color),
-            "info": info
-        })
+            "infoMessage": "Match",
+            "infoColor": "green",
+            "infoIcon": "zmdi zmdi-check",
+        }
+        if classes1[class_name] != classes2[class_name]:
+            compare["infoMessage"] = "Shapes differ"
+            compare["infoColor"] = "red"
+            compare["infoIcon"] = "zmdi zmdi-close",
+            differ_classes.append(compare)
+        else:
+            match_classes.append(compare)
+
+    classes_table = []
+    classes_table.extend(match_classes)
+    classes_table.extend(differ_classes)
 
     data = {
         "projectId1": PROJECT1.id,
