@@ -192,6 +192,7 @@ def merge(api: sly.Api, task_id, context, state, app_logger):
         {"field": "data.createdProjectName", "payload": res_project.name},
     ]
     api.app.set_fields(task_id, fields)
+    api.task.set_output_project(task_id, res_project.id, res_project.name)
     my_app.stop()
 
 
