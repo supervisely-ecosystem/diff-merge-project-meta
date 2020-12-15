@@ -1,0 +1,17 @@
+{
+  "name": "Diff and Merge Project Meta",
+  "type": "app",
+  "categories": [
+    "project meta"
+  ],
+  "description": "Visual diff and merge tool helps compare project tags and classes",
+  "docker_image": "supervisely/base-py-sdk:6",
+  "main_script": "src/main.py",
+  "modal_template": "src/modal.html",
+  "modal_template_state": {},
+  "gui_template": "src/gui.html",
+  "task_location": "workspace_tasks",
+  "isolate": true,
+  "icon": "https://i.imgur.com/1LM5XxI.png",
+  "icon_background": "#FFFFFF"
+}
