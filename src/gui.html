@@ -19,64 +19,21 @@
                 <sly-icon slot="icon" :options="{ imageUrl: `${data.projectPreviewUrl2}` }"/>
             </sly-field>
         </sly-card>
-
-        <sly-card class="mt15" title="Classes" subtitle="Compare classes ">
-
-        </sly-card>
-        <el-table
-      :data="tableData"
-      style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="Date"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="Name"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="Address">
-      </el-table-column>
-    </el-table>
-
-        <!--        <sly-card title="Output" style="width: 50%;">-->
-        <!--            <div v-if="data.started === true && data.progress !== 100">-->
-        <!--                <div>Processing: {{data.progressCurrent}} / {{data.progressTotal}}</div>-->
-        <!--                <el-progress :percentage="data.progress"></el-progress>-->
-        <!--            </div>-->
-        <!--            <sly-field v-if="data.progress === 100" title=""-->
-        <!--                       description="Report has been successfully saved">-->
-        <!--                <a slot="title" target="_blank" :href="`${data.reportUrl}`">{{data.reportName}}</a>-->
-        <!--                <sly-icon slot="icon" :options="{ color: '#33c94c', bgColor: '#d9f7e4', rounded: false }">-->
-        <!--                    <i class="zmdi zmdi-receipt"></i>-->
-        <!--                </sly-icon>-->
-        <!--            </sly-field>-->
-        <!--        </sly-card>-->
-        <!--    </div>-->
-
-        <!--    <sly-card class="mt15"-->
-        <!--              title="Interactive classes co-occurrence matrix"-->
-        <!--              subtitle="Click on the numbers to see the list of images"-->
-        <!--              style="min-height: 200px;"-->
-        <!--    >-->
-        <!--        <sly-table v-loading="data.loading"-->
-        <!--                   element-loading-text="Will be calculated after all images are processed"-->
-        <!--                   :options="{perPage: 50, pageSizes: [10, 20, 50, 100], fixColumns: 1}"-->
-        <!--                   :content="data.table"-->
-        <!--                   @input="state.selection = $event; command('show_images')"-->
-        <!--        ></sly-table>-->
-        <!--    </sly-card>-->
-        <!--&lt;!&ndash;    <pre>{{data.selection}}</pre>&ndash;&gt;-->
-        <!--    <sly-card class="mt15"-->
-        <!--              title="Images"-->
-        <!--              subtitle="Select cell in co-occurrence matrix to see corresponding images"-->
-        <!--    >-->
-        <!--        <sly-table v-if="state.selection.selectedColumnName"-->
-        <!--                   :options="{perPage: 50, pageSizes: [10, 20, 50, 100], fixColumns: 2}"-->
-        <!--                   :content='data.cellToImages'-->
-        <!--        ></sly-table>-->
-        <!--    </sly-card>-->
     </div>
+
+    <sly-card class="mt15" title="Classes" subtitle="Compare classes ">
+        <el-table class="ultra-table" :data="data.classesTable" style="width: 100%">
+            <el-table-column sortable prop="class1" label="Project 1: Classes">
+                <template scope="scope">
+                    <div>
+                        <i class="zmdi zmdi-circle" style></i>
+                        <span class="mr10 ml10">{{ scope.row.class1 }}</span>
+                        <i class="zmdi zmdi-shape"></i> {{ scope.row.shape1 }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="info" label="Compare"></el-table-column>
+            <el-table-column sortable prop="class2" label="Project 2: Classes"></el-table-column>
+        </el-table>
+    </sly-card>
+</div>

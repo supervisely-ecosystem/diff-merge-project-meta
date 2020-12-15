@@ -16,9 +16,9 @@ PROJECT2 = None
 META2 = None
 
 
-@my_app.callback("merge")
+@my_app.callback("compare")
 @sly.timeit
-def merge(api: sly.Api, task_id, context, state, app_logger):
+def compare(api: sly.Api, task_id, context, state, app_logger):
     pass
 
 
@@ -38,10 +38,20 @@ def init_ui(api: sly.Api, task_id, app_logger):
     diff_classes1 = classes1.keys() - mutual_classes
     diff_classes2 = classes2.keys() - mutual_classes
 
-
+    classes_table = []
     for class_name in mutual_classes:
-
-
+        info = "Match"
+        if classes1[class_name] != classes2[class_name]:
+            info = "Shapes differ"
+        classes_table.append({
+            "class1": class_name,
+            "color1": sly.color.rgb2hex(META1.obj_classes.get(class_name).color),
+            "shape1": classes1[class_name].geometry_name(),
+            "class2": class_name,
+            "shape2": classes2[class_name].geometry_name(),
+            "color2": sly.color.rgb2hex(META2.obj_classes.get(class_name).color),
+            "info": info
+        })
 
     data = {
         "projectId1": PROJECT1.id,
@@ -49,7 +59,8 @@ def init_ui(api: sly.Api, task_id, app_logger):
         "projectPreviewUrl1": api.image.preview_url(PROJECT1.reference_image_url, 100, 100),
         "projectId2": PROJECT2.id,
         "projectName2": PROJECT2.name,
-        "projectPreviewUrl2": api.image.preview_url(PROJECT2.reference_image_url, 100, 100)
+        "projectPreviewUrl2": api.image.preview_url(PROJECT2.reference_image_url, 100, 100),
+        "classesTable": classes_table,
     }
     state = {
     }
