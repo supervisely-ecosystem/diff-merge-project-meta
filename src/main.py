@@ -37,36 +37,55 @@ def init_ui(api: sly.Api, task_id, app_logger):
     classes1 = {obj_class.name: obj_class.geometry_type for obj_class in META1.obj_classes}
     classes2 = {obj_class.name: obj_class.geometry_type for obj_class in META2.obj_classes}
 
+    all_classes = classes1.keys() | classes2.keys()
     mutual_classes = classes1.keys() & classes2.keys()
     diff_classes1 = classes1.keys() - mutual_classes
     diff_classes2 = classes2.keys() - mutual_classes
 
     match_classes = []
     differ_classes = []
+    missed_classes = []
 
-    for class_name in mutual_classes:
-        compare = {
-            "class1": class_name,
-            "color1": sly.color.rgb2hex(META1.obj_classes.get(class_name).color),
-            "shape1": classes1[class_name].geometry_name(),
-            "class2": class_name,
-            "shape2": classes2[class_name].geometry_name(),
-            "color2": sly.color.rgb2hex(META2.obj_classes.get(class_name).color),
-            "infoMessage": "Match",
-            "infoColor": "green",
-            "infoIcon": "zmdi zmdi-check",
-        }
-        if classes1[class_name] != classes2[class_name]:
-            compare["infoMessage"] = "Shapes differ"
-            compare["infoColor"] = "red"
-            compare["infoIcon"] = "zmdi zmdi-close",
-            differ_classes.append(compare)
+    for class_name in all_classes:
+        compare = {}
+        class1 = META1.obj_classes.get(class_name)
+        if class1 is not None:
+            compare["class1"] = class_name
+            compare["color1"] = sly.color.rgb2hex(class1.color)
+            compare["shape1"] = class1.geometry_type.geometry_name()
+        class2 = META2.obj_classes.get(class_name)
+        if class2 is not None:
+            compare["class2"] = class_name
+            compare["color2"] = sly.color.rgb2hex(class2.color)
+            compare["shape2"] = class2.geometry_type.geometry_name()
+
+        compare["iconPosition"] = "left"
+        compare["infoMessage"] = "Match"
+        compare["infoColor"] = "green"
+        if class_name in mutual_classes:
+            if classes1[class_name] != classes2[class_name]:
+                compare["infoMessage"] = "Shapes differ"
+                compare["infoColor"] = "red"
+                compare["infoIcon"] = ["zmdi zmdi-close"],
+                differ_classes.append(compare)
+            else:
+                compare["infoIcon"] = ["zmdi zmdi-check"],
+                match_classes.append(compare)
         else:
-            match_classes.append(compare)
+            if class_name in diff_classes1:
+                compare["infoMessage"] = "Class is missing in project 2"
+                compare["infoIcon"] = ["zmdi zmdi-alert-circle-o", "zmdi zmdi-long-arrow-right"]
+                compare["iconPosition"] = "right"
+            else:
+                compare["infoMessage"] = "Class is missing in project 1"
+                compare["infoIcon"] = ["zmdi zmdi-long-arrow-left", "zmdi zmdi-alert-circle-o"]
+            compare["infoColor"] = "#FFBF00"
+            missed_classes.append(compare)
 
     classes_table = []
     classes_table.extend(match_classes)
     classes_table.extend(differ_classes)
+    classes_table.extend(missed_classes)
 
     data = {
         "projectId1": PROJECT1.id,
