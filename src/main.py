@@ -16,10 +16,69 @@ PROJECT2 = None
 META2 = None
 
 
-@my_app.callback("compare")
-@sly.timeit
-def compare(api: sly.Api, task_id, context, state, app_logger):
-    pass
+def process_items(collection1, collection2, diff_msg="Shapes differ"):
+    items1 = {item.name: 1 for item in collection1}
+    items2 = {item.name: 1 for item in collection2}
+    names = items1.keys() | items2.keys()
+    mutual = items1.keys() & items2.keys()
+    diff1 = items1.keys() - mutual
+    diff2 = items2.keys() - mutual
+
+    match = []
+    differ = []
+    missed = []
+
+    def set_info(d, index, meta):
+        d[f"class{index}"] = meta.name
+        d[f"color{index}"] = sly.color.rgb2hex(meta.color)
+        if type(meta) is sly.ObjClass:
+            d[f"shape{index}"] = meta.geometry_type.geometry_name()
+        else:
+            meta: sly.TagMeta
+            d[f"shape{index}"] = meta.value_type
+
+    for name in names:
+        compare = {}
+        meta1 = collection1.get(name)
+        if meta1 is not None:
+            set_info(compare, 1, meta1)
+        meta2 = collection2.get(name)
+        if meta2 is not None:
+            set_info(compare, 2, meta2)
+
+        compare["infoMessage"] = "Match"
+        compare["infoColor"] = "green"
+        if name in mutual:
+            flag = True
+            if type(meta1) is sly.ObjClass and meta1.geometry_type != meta2.geometry_type:
+                flag = False
+            if type(meta1) is sly.TagMeta and meta1.value_type != meta2.value_type:
+                flag = False
+
+            if flag is False:
+                compare["infoMessage"] = diff_msg
+                compare["infoColor"] = "red"
+                compare["infoIcon"] = ["zmdi zmdi-close"],
+                differ.append(compare)
+            else:
+                compare["infoIcon"] = ["zmdi zmdi-check"],
+                match.append(compare)
+        else:
+            if name in diff1:
+                compare["infoMessage"] = "Missing in Project #2"
+                compare["infoIcon"] = ["zmdi zmdi-alert-circle-o", "zmdi zmdi-long-arrow-right"]
+                compare["iconPosition"] = "right"
+            else:
+                compare["infoMessage"] = "Missing in Project #1"
+                compare["infoIcon"] = ["zmdi zmdi-long-arrow-left", "zmdi zmdi-alert-circle-o"]
+            compare["infoColor"] = "#FFBF00"
+            missed.append(compare)
+
+    table = []
+    table.extend(match)
+    table.extend(differ)
+    table.extend(missed)
+    return table
 
 
 def init_ui(api: sly.Api, task_id, app_logger):
@@ -34,58 +93,15 @@ def init_ui(api: sly.Api, task_id, app_logger):
     META1 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID1))
     META2 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID2))
 
-    classes1 = {obj_class.name: obj_class.geometry_type for obj_class in META1.obj_classes}
-    classes2 = {obj_class.name: obj_class.geometry_type for obj_class in META2.obj_classes}
+    classes_table = process_items(META1.obj_classes, META2.obj_classes)
 
-    all_classes = classes1.keys() | classes2.keys()
-    mutual_classes = classes1.keys() & classes2.keys()
-    diff_classes1 = classes1.keys() - mutual_classes
-    diff_classes2 = classes2.keys() - mutual_classes
-
-    match_classes = []
-    differ_classes = []
-    missed_classes = []
-
-    for class_name in all_classes:
-        compare = {}
-        class1 = META1.obj_classes.get(class_name)
-        if class1 is not None:
-            compare["class1"] = class_name
-            compare["color1"] = sly.color.rgb2hex(class1.color)
-            compare["shape1"] = class1.geometry_type.geometry_name()
-        class2 = META2.obj_classes.get(class_name)
-        if class2 is not None:
-            compare["class2"] = class_name
-            compare["color2"] = sly.color.rgb2hex(class2.color)
-            compare["shape2"] = class2.geometry_type.geometry_name()
-
-        compare["iconPosition"] = "left"
-        compare["infoMessage"] = "Match"
-        compare["infoColor"] = "green"
-        if class_name in mutual_classes:
-            if classes1[class_name] != classes2[class_name]:
-                compare["infoMessage"] = "Shapes differ"
-                compare["infoColor"] = "red"
-                compare["infoIcon"] = ["zmdi zmdi-close"],
-                differ_classes.append(compare)
-            else:
-                compare["infoIcon"] = ["zmdi zmdi-check"],
-                match_classes.append(compare)
-        else:
-            if class_name in diff_classes1:
-                compare["infoMessage"] = "Class is missing in project 2"
-                compare["infoIcon"] = ["zmdi zmdi-alert-circle-o", "zmdi zmdi-long-arrow-right"]
-                compare["iconPosition"] = "right"
-            else:
-                compare["infoMessage"] = "Class is missing in project 1"
-                compare["infoIcon"] = ["zmdi zmdi-long-arrow-left", "zmdi zmdi-alert-circle-o"]
-            compare["infoColor"] = "#FFBF00"
-            missed_classes.append(compare)
-
-    classes_table = []
-    classes_table.extend(match_classes)
-    classes_table.extend(differ_classes)
-    classes_table.extend(missed_classes)
+    tags1 = {tag_meta.name: 1 for tag_meta in META1.tag_metas}
+    tags2 = {tag_meta.name: 1 for tag_meta in META2.tag_metas}
+    all_tags = tags1.keys() | tags2.keys()
+    mutual_tags = tags1.keys() & tags2.keys()
+    diff_tags1 = tags1.keys() - mutual_tags
+    diff_tags2 = tags2.keys() - mutual_tags
+    #tags_table = process_items(all_classes, diff_classes1, META1.obj_classes, META2.obj_classes, )
 
     data = {
         "projectId1": PROJECT1.id,
