@@ -33,9 +33,11 @@ def process_items(collection1, collection2, diff_msg="Shapes differ"):
         d[f"color{index}"] = sly.color.rgb2hex(meta.color)
         if type(meta) is sly.ObjClass:
             d[f"shape{index}"] = meta.geometry_type.geometry_name()
+            d[f"shapeIcon{index}"] = "zmdi zmdi-shape"
         else:
             meta: sly.TagMeta
             d[f"shape{index}"] = meta.value_type
+            d[f"shapeIcon{index}"] = "zmdi zmdi-label"
 
     for name in names:
         compare = {}
@@ -94,14 +96,7 @@ def init_ui(api: sly.Api, task_id, app_logger):
     META2 = sly.ProjectMeta.from_json(api.project.get_meta(PROJECT_ID2))
 
     classes_table = process_items(META1.obj_classes, META2.obj_classes)
-
-    tags1 = {tag_meta.name: 1 for tag_meta in META1.tag_metas}
-    tags2 = {tag_meta.name: 1 for tag_meta in META2.tag_metas}
-    all_tags = tags1.keys() | tags2.keys()
-    mutual_tags = tags1.keys() & tags2.keys()
-    diff_tags1 = tags1.keys() - mutual_tags
-    diff_tags2 = tags2.keys() - mutual_tags
-    #tags_table = process_items(all_classes, diff_classes1, META1.obj_classes, META2.obj_classes, )
+    tags_table = process_items(META1.tag_metas, META2.tag_metas, diff_msg="Tag type differ")
 
     data = {
         "projectId1": PROJECT1.id,
@@ -110,7 +105,20 @@ def init_ui(api: sly.Api, task_id, app_logger):
         "projectId2": PROJECT2.id,
         "projectName2": PROJECT2.name,
         "projectPreviewUrl2": api.image.preview_url(PROJECT2.reference_image_url, 100, 100),
-        "classesTable": classes_table,
+        "cards": [
+            {
+                "table": classes_table,
+                "name": "Compare Classes",
+                "description": "Classes colors are ignored",
+                "columnSuffix": "classes"
+            },
+            {
+                "table": tags_table,
+                "name": "Compare Tags",
+                "description": "Tags colors are ignored",
+                "columnSuffix": "tags"
+            }
+        ]
     }
     state = {
     }
