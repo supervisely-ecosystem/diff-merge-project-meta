@@ -18,7 +18,7 @@
     "projectId2": null
   },
   "gui_template": "src/gui.html",
-  "task_location": "workspace_tasks",
+  "task_location": "application_sessions",
   "isolate": true,
   "icon": "https://i.imgur.com/1LM5XxI.png",
   "icon_background": "#FFFFFF"
