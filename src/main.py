@@ -211,7 +211,5 @@ def main():
     my_app.run(data=data, state=state)
 
 
-#@TODO: readme - project custom data
-#@TODO: readme - default res team/workspace == current
 if __name__ == "__main__":
     sly.main_wrapper("main", main)
