@@ -1,7 +1,7 @@
 <div align="center" markdown>
 <img src="https://i.imgur.com/VQSbsqa.png"/>
 
-# Classes Co-Occurrence Matrix
+# Diff Merge Project Meta
 
 <p align="center">
   <a href="#Overview">Overview</a> •
@@ -32,18 +32,6 @@ Visually compare projects meta: tags and classes. Define how to merge them and h
 
 <img src="https://i.imgur.com/QRYME1U.png" width="500px"/>
 
-**Step 3:** Wait until the app is started, press `Open` button in `Workspace tasks`. You don't need to wait untill all images are processed: if open button is enabled then click it.
+**Step 3:** Explore comparison tables, define merge options and press `Run` button.
 
-<img src="https://i.imgur.com/INasHFk.png"/>
-
-
-**Step 4:** Explore you data with interactive table: click on cells to access corresponding images and open them in labeling UI.
-
-**Step 5:** App saves link to report to team files: `/reports/classes-co-occurrence/<project id>_<project_name>.lnk`. Link to generated report also available in task output column. 
-
-**Step 6:** Stop application once you finished with it. App can be stopped from tasks list or from application UI.
-
-Example of the results:
-Stop from App UI  |  Stop from workspace tasks page
-:-------------------------:|:-----------------------------------:
-![](https://i.imgur.com/92gkvBy.png)  |  ![](https://i.imgur.com/EzLGXdd.png)
+**Step 4:** Task is created in `Application Sessions`
