@@ -12,10 +12,10 @@
   "modal_template_state": {
     "teamId1": null,
     "workspaceId1": null,
-    "projectId1": "",
+    "projectId1": null,
     "teamId2": null,
     "workspaceId2": null,
-    "projectId2": ""
+    "projectId2": null
   },
   "gui_template": "src/gui.html",
   "task_location": "workspace_tasks",
