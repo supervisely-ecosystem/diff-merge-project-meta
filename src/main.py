@@ -2,7 +2,7 @@ import os
 import supervisely_lib as sly
 
 
-my_app = sly.AppService()
+my_app = sly.AppService(ignore_task_id=True)
 
 TEAM_ID = int(os.environ['context.teamId'])
 WORKSPACE_ID = int(os.environ['context.workspaceId'])
@@ -211,5 +211,6 @@ def main():
 
 
 #@TODO: readme - project custom data
+#@TODO: readme - default res team/workspace == current
 if __name__ == "__main__":
     sly.main_wrapper("main", main)

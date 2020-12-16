@@ -8,7 +8,14 @@
   "docker_image": "supervisely/base-py-sdk:6",
   "main_script": "src/main.py",
   "modal_template": "src/modal.html",
-  "modal_template_state": {},
+  "modal_template_state": {
+    "teamId1": null,
+    "workspaceId1": null,
+    "projectId1": "",
+    "teamId2": null,
+    "workspaceId2": null,
+    "projectId2": ""
+  },
   "gui_template": "src/gui.html",
   "task_location": "workspace_tasks",
   "isolate": true,
