@@ -1,7 +1,7 @@
 <div align="center" markdown>
-<img src="https://i.imgur.com/fKgBq5x.png"/>
+<img src="https://i.imgur.com/VQSbsqa.png"/>
 
-# Classes Co-Occurrence Matrix
+# Diff Merge Project Meta
 
 <p align="center">
   <a href="#Overview">Overview</a> •
@@ -9,46 +9,46 @@
 </p>
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/classes-co-occurrence-matrix)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/diff-merge-project-meta)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/classes-co-occurrence-matrix)
-[![views](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/classes-co-occurrence-matrix&counter=views&label=views)](https://supervise.ly)
-[![used by teams](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/classes-co-occurrence-matrix&counter=downloads&label=used%20by%20teams)](https://supervise.ly)
-[![runs](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/classes-co-occurrence-matrix&counter=runs&label=runs)](https://supervise.ly)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/diff-merge-project-meta)
+[![views](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/diff-merge-project-meta&counter=views&label=views)](https://supervise.ly)
+[![used by teams](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/diff-merge-project-meta&counter=downloads&label=used%20by%20teams)](https://supervise.ly)
+[![runs](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/diff-merge-project-meta&counter=runs&label=runs)](https://supervise.ly)
 
 </div>
 
 ## Overview
 
-App takes images project (or dataset) as an input and produces an “Interactive co-occurrence matrix” that has the following dimensions: `row_number = number of classes`, `col_number = number of classes`. Each cell of the matrix shows how often a pair of classes (say person and car) appears together (how many images that simultaneously contain at least 1 person and at least 1 car). Each cell is clickable to open corresponding images.
+Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use `Diff Merge Projects` app to merge images and annotations and place them to the project created by this application.
 
-Additional comments:
-- This app is good for data exploration since it allows to see a big picture (co-occurrence statistics) as well as to navigate to the images of interest
-- This App might be used to find “suspicious annotations”. If annotator has confused the class, we might see it as an “unexpected value” in the cell of “coexistence matrix”
-- Gradient based colors of the matrix’ cells might be useful (will be added in next version)
-
-<img src="https://i.imgur.com/n3HhWCQ.png"/>
+<img src="https://i.imgur.com/qjCJL5F.png"/>
 
 ## How To Use
 
 **Step 1:** Add app to your team from Ecosystem if it is not there
 
-**Step 2:** Run app from the context menu of images project or dataset: `context menu` -> `Reports` -> `Classes Co-Occurrence Matrix`
+**Step 2:** Run app from the `Apps` page of current team
 
-<img src="https://i.imgur.com/emHci7n.png" width="500px"/>
+<img src="https://i.imgur.com/QRYME1U.png" width="500px"/>
 
-**Step 3:** Wait until the app is started, press `Open` button in `Workspace tasks`. You don't need to wait untill all images are processed: if open button is enabled then click it.
+**Step 3:** Explore comparison tables, define merge options and press `Run` button.
 
-<img src="https://i.imgur.com/INasHFk.png"/>
+**Step 4:** New project is created. Information about input projects is saved in `custom data` of created project. For example:
 
+```json
+{
+  "project1": {
+    "id": 1436,
+    "name": "lemons_annotated"
+  },
+  "project2": {
+    "id": 1455,
+    "name": "kiwi_annotated"
+  }
+}
+```
 
-**Step 4:** Explore you data with interactive table: click on cells to access corresponding images and open them in labeling UI.
+<img src="https://i.imgur.com/TR070VM.png"/>
 
-**Step 5:** App saves link to report to team files: `/reports/classes-co-occurrence/<project id>_<project_name>.lnk`. Link to generated report also available in task output column. 
-
-**Step 6:** Stop application once you finished with it. App can be stopped from tasks list or from application UI.
-
-Example of the results:
-Stop from App UI  |  Stop from workspace tasks page
-:-------------------------:|:-----------------------------------:
-![](https://i.imgur.com/92gkvBy.png)  |  ![](https://i.imgur.com/EzLGXdd.png)
+**Step 4:** Task is created in `Application Sessions`. 
