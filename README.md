@@ -34,4 +34,21 @@ Visually compare projects meta: tags and classes. Define how to merge them and h
 
 **Step 3:** Explore comparison tables, define merge options and press `Run` button.
 
-**Step 4:** Task is created in `Application Sessions`
+**Step 4:** New project is created. Information about input projects is saved in `custom data` of created project. For example:
+
+```json
+{
+  "project1": {
+    "id": 1436,
+    "name": "lemons_annotated"
+  },
+  "project2": {
+    "id": 1455,
+    "name": "kiwi_annotated"
+  }
+}
+```
+
+<img src="https://i.imgur.com/qjCJL5F.png"/>
+
+**Step 4:** Task is created in `Application Sessions`. 
