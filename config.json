@@ -2,6 +2,7 @@
   "name": "Diff and Merge Project Meta",
   "type": "app",
   "categories": [
+    "diff merge tools",
     "project meta"
   ],
   "description": "Visual diff and merge tool helps compare project tags and classes",
