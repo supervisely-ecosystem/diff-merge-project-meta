@@ -187,10 +187,15 @@ def merge(api: sly.Api, task_id, context, state, app_logger):
                                      description=f"{PROJECT1.name} + {PROJECT2.name}",
                                      change_name_if_conflict=True)
     api.project.update_meta(res_project.id, res_meta.to_json())
+    api.project.update_custom_data(res_project.id, {
+        "project1": {"id": PROJECT1.id, "name": PROJECT1.name},
+        "project2": {"id": PROJECT2.id, "name": PROJECT2.name}
+    })
     fields = [
         {"field": "data.createdProjectId", "payload": res_project.id},
         {"field": "data.createdProjectName", "payload": res_project.name},
     ]
+
     api.app.set_fields(task_id, fields)
     api.task.set_output_project(task_id, res_project.id, res_project.name)
     my_app.stop()
@@ -205,6 +210,6 @@ def main():
     my_app.run(data=data, state=state)
 
 
-#@TODO: add original project ids to metadata and description
+#@TODO: readme - project custom data
 if __name__ == "__main__":
     sly.main_wrapper("main", main)

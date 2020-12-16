@@ -1,6 +1,6 @@
 <div>
     <div class="fflex" style="align-items: stretch">
-        <sly-card title="Project 1" style="width: 33%" class="mr15">
+        <sly-card title="Project #1" style="width: 33%" class="mr15">
             <sly-field title="" description="Project">
                 <a slot="title" target="_blank"
                    :href="`/projects/${data.projectId1}/datasets`">{{data.projectName1}}</a>
@@ -29,7 +29,7 @@
             </sly-field>
         </sly-card>
 
-        <sly-card title="Project 2" style="width: 33%">
+        <sly-card title="Project #2" style="width: 33%">
             <sly-field title="" description="Project">
                 <a slot="title" target="_blank"
                    :href="`/projects/${data.projectId2}/datasets`">{{data.projectName2}}</a>
@@ -114,7 +114,7 @@
                 </el-select>
             </div>
         </sly-field>
-        <sly-field title="Result project name" description="Empty project will be created with some classes and tags">
+        <sly-field title="Result project" description="Empty project will be created with merged classes and tags">
             <sly-icon slot="icon" :options="{ color: '#2cd26e', bgColor: '#d8f8e7', rounded: false }">
                 <i class="zmdi zmdi-collection-folder-image"></i>
             </sly-icon>
