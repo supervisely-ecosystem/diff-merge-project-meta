@@ -20,7 +20,7 @@
 
 ## Overview
 
-Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use `Diff Merge Projects` app to merge images and annotations and place them to the project created by this application.
+Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use [`Diff Merge Images Projects`](https://app.supervise.ly/ecosystem/apps/diff-merge-images-projects) app to merge images and annotations and place them to the project created by this application.
 
 <img src="https://i.imgur.com/qjCJL5F.png"/>
 
