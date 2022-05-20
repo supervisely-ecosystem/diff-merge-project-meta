@@ -51,4 +51,4 @@ Visually compare projects meta: tags and classes. Define how to merge them and h
 
 <img src="https://i.imgur.com/TR070VM.png"/>
 
-**Step 4:** Task is created in `Application Sessions`. 
+**Step 5:** Task is created in `Application Sessions`. 
