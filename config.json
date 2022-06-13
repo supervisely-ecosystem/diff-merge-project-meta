@@ -2,8 +2,8 @@
   "name": "Diff and Merge Project Meta",
   "type": "app",
   "categories": [
-    "diff merge tools",
-    "project meta"
+    "images",
+    "project management"
   ],
   "description": "Visual diff and merge tool helps compare project tags and classes",
   "docker_image": "supervisely/base-py-sdk:6",
