@@ -1,5 +1,5 @@
 <div align="center" markdown>
-<img src="https://i.imgur.com/VQSbsqa.png"/>
+<img src="https://user-images.githubusercontent.com/106374579/182864698-073d3481-628e-43f4-a074-85bf3abeae3d.png"/>
 
 # Diff Merge Project Meta
 
