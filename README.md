@@ -21,7 +21,7 @@
 
 Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use [`Diff Merge Images Projects`](https://app.supervise.ly/ecosystem/apps/diff-merge-images-projects) app to merge images and annotations and place them to the project created by this application.
 
-<img src="https://i.imgur.com/qjCJL5F.png"/>
+<img src="media/ov.png"/>
 
 ## How To Use
 
@@ -29,7 +29,7 @@ Visually compare projects meta: tags and classes. Define how to merge them and h
 
 **Step 2:** Run app from the `Apps` page of current team
 
-<img src="https://i.imgur.com/QRYME1U.png" width="500px"/>
+<img src="media/htr2.png" width="500px"/>
 
 **Step 3:** Explore comparison tables, define merge options and press `Run` button.
 
@@ -48,6 +48,6 @@ Visually compare projects meta: tags and classes. Define how to merge them and h
 }
 ```
 
-<img src="https://i.imgur.com/TR070VM.png"/>
+<img src="media/htr4.png"/>
 
 **Step 5:** Task is created in `Application Sessions`. 
