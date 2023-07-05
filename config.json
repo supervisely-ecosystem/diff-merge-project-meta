@@ -23,7 +23,7 @@
   "gui_template": "src/gui.html",
   "task_location": "application_sessions",
   "isolate": true,
-  "icon": "https://i.imgur.com/1LM5XxI.png",
+  "icon": "media/icon.png",
   "icon_background": "#FFFFFF",
   "poster": "https://user-images.githubusercontent.com/106374579/182864698-073d3481-628e-43f4-a074-85bf3abeae3d.png"
 }
