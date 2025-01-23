@@ -9,17 +9,17 @@
 </p>
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/diff-merge-project-meta)
-[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervisely.com/apps/diff-merge-project-meta)
+[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervisely.com/slack)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/diff-merge-project-meta)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/diff-merge-project-meta.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/diff-merge-project-meta.png)](https://supervise.ly)
+[![views](https://app.supervisely.com/img/badges/views/supervisely-ecosystem/diff-merge-project-meta.png)](https://supervisely.com)
+[![runs](https://app.supervisely.com/img/badges/runs/supervisely-ecosystem/diff-merge-project-meta.png)](https://supervisely.com)
 
 </div>
 
 ## Overview
 
-Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use [`Diff Merge Images Projects`](https://app.supervise.ly/ecosystem/apps/diff-merge-images-projects) app to merge images and annotations and place them to the project created by this application.
+Visually compare projects meta: tags and classes. Define how to merge them and how to resolve conflicts. New empty project will be created with merged classes and tags. Then you can use [`Diff Merge Images Projects`](https://app.supervisely.com/ecosystem/apps/diff-merge-images-projects) app to merge images and annotations and place them to the project created by this application.
 
 <img src="https://i.imgur.com/qjCJL5F.png"/>
 
